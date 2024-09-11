@@ -35,9 +35,9 @@ const operate = function(firstNumber, secondNumber, operator) {
     }
 }
 
-function display(number) { 
+function display(val) { 
     const result = document.querySelector("#result")
-    result.value += number 
+    result.value += val 
 
     const displayValue = result.value;
 } 
