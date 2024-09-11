@@ -35,12 +35,28 @@ const operate = function(firstNumber, secondNumber, operator) {
     }
 }
 
-let result = document.querySelector("#result")
-let displayValue = "";
+let result = document.querySelector("#result");
+let displayValue;
 
-function display(val) { 
-    result.value += val 
-    displayValue = result.value;
+let count = 0;
+
+function display(val) {
+    if(val != "+" && val != "−" && val != "×" && val != "÷") {
+        result.value = val;
+
+        if (count == 0) {
+            firstNumber = Number(val);
+            count++;
+        }
+
+        if (count == 1) {
+            secondNumber = Number(val);
+        }
+    }
+
+    if (val == "+" || val == "−" || val == "×" || val == "÷") {
+        operator = val;
+    }
 } 
 
 setEventListener();
@@ -96,51 +112,20 @@ function setEventListener() {
     });
 }
 
-// Event: When user clicks on "=", the displayValue string has to be parsed into two numbers and one operator,
-// the operator function has to be called and the solution be shown on the display.
-
 const equals = document.querySelector('input[value="="]')
 
 equals.addEventListener("click", () => {
-
-    let operands;
-    let first;
-    let second;
-    let op;
-
-    if (displayValue.includes("+")) {
-        operands = displayValue.split("+");
-        op = "+";
-        
-    }
-
-    if (displayValue.includes("−")) {
-        operands = displayValue.split("−");
-        op = "−";
-    }
-
-    if (displayValue.includes("×")) {
-        operands = displayValue.split("×");
-        op = "×";  
-    }
-
-    if (displayValue.includes("÷")) {
-        operands = displayValue.split("÷");
-        op = "÷";
-    }
-        
-    first = Number(operands[0]);
-    second = Number(operands[1]);
-    const res = operate(first, second, op);
-    result.value = "";
-    result.value = res;
-    
-});
+     const res = operate(firstNumber, secondNumber, operator);
+     result.value = "";
+     result.value = res;
+})
 
 const clear = document.querySelector('input[value="c"]');
 clear.addEventListener("click", () => {
     result.value = "";
-    displayValue = "";
+    firstNumber = "";
+    secondNumber = "";
+    count = 0;
 });
 
 
