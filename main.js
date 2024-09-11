@@ -38,24 +38,40 @@ const operate = function(firstNumber, secondNumber, operator) {
 let result = document.querySelector("#result");
 let displayValue;
 
-let count = 0;
+let countNum = 0;
+let countOp = 0;
 
 function display(val) {
     if(val != "+" && val != "−" && val != "×" && val != "÷") {
         result.value = val;
 
-        if (count == 0) {
-            firstNumber = Number(val);
-            count++;
+        if (countNum == 1) {
+            secondNumber = Number(val);
+            countNum++
         }
 
-        if (count == 1) {
-            secondNumber = Number(val);
+        if (countNum == 0) {
+            firstNumber = Number(val);
+            countNum++;
         }
     }
 
     if (val == "+" || val == "−" || val == "×" || val == "÷") {
-        operator = val;
+
+        if (countOp == 1) {
+            const res = operate(firstNumber, secondNumber, operator);
+            
+            result.value = res;
+
+            operator = val;
+            firstNumber = res;
+            countNum = 1;
+        }
+        
+        if (countOp == 0) {
+            operator = val;
+            countOp++;
+        } 
     }
 } 
 
@@ -125,7 +141,8 @@ clear.addEventListener("click", () => {
     result.value = "";
     firstNumber = "";
     secondNumber = "";
-    count = 0;
+    countNum = 0;
+    countOp = 0;
 });
 
 
