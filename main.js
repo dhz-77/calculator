@@ -22,24 +22,25 @@ let operator;
 
 const operate = function(firstNumber, secondNumber, operator) {
     if (operator === "+") {
-        add(firstNumber, secondNumber);
+        return add(firstNumber, secondNumber);
     }
-    if (operator === "-") {
-        subtract(firstNumber, secondNumber);
+    if (operator === "−") {
+        return subtract(firstNumber, secondNumber);
     }
-    if (operator === "*") {
-        multiply(firstNumber, secondNumber);
+    if (operator === "×") {
+       return multiply(firstNumber, secondNumber);
     }
-    if (operator === "/") {
-        divide(firstNumber, secondNumber);
+    if (operator === "÷") {
+        return divide(firstNumber, secondNumber);
     }
 }
 
-function display(val) { 
-    const result = document.querySelector("#result")
-    result.value += val 
+let result = document.querySelector("#result")
+let displayValue = "";
 
-    const displayValue = result.value;
+function display(val) { 
+    result.value += val 
+    displayValue = result.value;
 } 
 
 setEventListener();
@@ -94,3 +95,46 @@ function setEventListener() {
         });
     });
 }
+
+// Event: When user clicks on "=", the displayValue string has to be parsed into two numbers and one operator,
+// the operator function has to be called and the solution be shown on the display.
+
+const equals = document.querySelector('input[value="="]')
+
+equals.addEventListener("click", () => {
+
+    let operands;
+    let first;
+    let second;
+    let op;
+
+    if (displayValue.includes("+")) {
+        operands = displayValue.split("+");
+        op = "+";
+        
+    }
+
+    if (displayValue.includes("−")) {
+        operands = displayValue.split("−");
+        op = "−";
+    }
+
+    if (displayValue.includes("×")) {
+        operands = displayValue.split("×");
+        op = "×";  
+    }
+
+    if (displayValue.includes("÷")) {
+        operands = displayValue.split("÷");
+        op = "÷";
+    }
+        
+    first = Number(operands[0]);
+    second = Number(operands[1]);
+    const res = operate(first, second, op);
+    result.value = "";
+    result.value = res;
+    
+});
+
+
