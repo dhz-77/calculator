@@ -137,4 +137,11 @@ equals.addEventListener("click", () => {
     
 });
 
+const clear = document.querySelector('input[value="c"]');
+clear.addEventListener("click", () => {
+    result.value = "";
+    displayValue = "";
+});
+
+
 
